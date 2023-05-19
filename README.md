@@ -1,6 +1,6 @@
 # studiokay-experiments
 
-Animation and layout experiments for Studiokay.
+Animation and layout experiments for Studiokay. See it live: https://stunning-baklava-e659f6.netlify.app
 
 ## Requirements
 
