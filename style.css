@@ -1,6 +1,6 @@
 /* Main stylesheet, using BEM CSS naming conventions */
 
-.container {
+body {
   --container-height: 10000;
   --container-margin: 50;
   --container-fg-col: black;
@@ -10,9 +10,6 @@
 
   --theme-darken-start: 500;
   --theme-darken-end: 500;
-
-  --header-height: 5000;
-  --header-inner-height: 500;
 
   --heading-main-shrink: 0.4;
   --heading-secondary-shrink: 0.6;
@@ -25,23 +22,32 @@
   --heading-text-merge-start: 1000;
   --heading-text-merge-end: 1500;
 
+  --heading-o-offset: 1.35;
   --heading-o-shrink-distance: 1000;
-  --heading-o-margin: 0.002;
+  --heading-o-margin: 0.003;
   --heading-o-width: 0.21;
-  --heading-o-height-ratio: 0.49;
+  --heading-o-height-ratio: 0.47;
   --heading-o-left-offset: 0.387;
   /* Border thickness based on viewport to match thickness of logotype (also based on viewport) */
   --heading-o-thickness: 0.0147;
   /* Ensure heading-o's overhang edges enough */
   --heading-o-min-overhang: calc(var(--container-margin) * 3);
+  --heading-o-fade-start: 2000;
+  --heading-o-fade-end: 2001;
 
   --smiley-left-offset: 0.897;
   --smiley-rotate-distance: 3000;
 
+  --hero-secondary-text-start: 200;
+  --hero-secondary-text-end: 2500;
+
+  --hero-height: 2500;
+
   height: calc(var(--container-height) * 1px);
   color: var(--container-fg-col);
   background-color: var(--container-bg-col);
-  padding: calc(var(--container-margin) * 1px);
+  font-family: 'AUTHENTIC Sans';
+  overflow-x: hidden;
 
   animation: theme-darken 1s linear
     calc(
@@ -60,16 +66,13 @@
 
 .header {
   height: calc(var(--header-height) * 1px);
-  position: relative;
-}
-
-.header__inner {
-  position: sticky;
-  top: calc(var(--container-margin) * 1px);
-  height: calc(var(--header-inner-height) * 1px);
+  position: fixed;
+  width: 100%;
+  padding: calc(var(--container-margin) * 1px);
 }
 
 .heading__main {
+  position: relative;
   transform-origin: top left;
 
   animation: heading-main-shrink 1s linear
@@ -177,6 +180,10 @@
 }
 
 @keyframes heading-smiley-rotate {
+  /* The from block is required for Safari for this specific animation */
+  from {
+    transform: rotate(20deg);
+  }
   to {
     transform: rotate(380deg);
   }
@@ -184,14 +191,14 @@
 
 .heading__o {
   position: absolute;
-  margin: calc(var(--heading-o-margin) * 100%) 0;
+  padding: calc(var(--heading-o-margin) * 100%) 0;
   width: calc(var(--heading-o-width) * 100%);
   aspect-ratio: 1 / var(--heading-o-height-ratio);
   left: calc(var(--heading-o-left-offset) * 100%);
 }
 
 .heading__o--end {
-  transform: translateY(calc(var(--heading-text-offset) * 100%));
+  transform: translateY(calc(var(--heading-o-offset) * 100%));
 
   animation: heading-text-merge 1s linear
     calc(
@@ -203,21 +210,14 @@
 
 .heading__o-line {
   position: absolute;
-  background-color: var(--container-bg-col);
 
   border: calc(var(--heading-o-thickness) * 100vw) solid currentColor;
   border-radius: 1000px;
   height: 100%;
 
   animation: heading-o-line-shrink 1s linear
-      calc(var(--scroll-y) / var(--heading-o-shrink-distance) * -1s) 1 normal
-      both paused,
-    theme-darken 1s linear
-      calc(
-        (var(--scroll-y) - var(--theme-darken-start)) /
-          (var(--theme-darken-end) - var(--theme-darken-start)) * -1s
-      )
-      1 normal both paused;
+    calc(var(--scroll-y) / var(--heading-o-shrink-distance) * -1s) 1 normal both
+    paused;
 }
 
 @keyframes heading-o-line-shrink {
@@ -234,6 +234,7 @@
 }
 
 .heading__o-line--end {
+  background-color: var(--container-bg-col);
   right: 0;
   width: calc(
     (
@@ -241,4 +242,98 @@
           var(--heading-o-width)
       ) * 100% + (var(--heading-o-min-overhang) * 1px)
   );
+
+  animation: heading-o-line-shrink 1s linear
+      calc(var(--scroll-y) / var(--heading-o-shrink-distance) * -1s) 1 normal
+      both paused,
+    theme-darken 1s linear
+      calc(
+        (var(--scroll-y) - var(--theme-darken-start)) /
+          (var(--theme-darken-end) - var(--theme-darken-start)) * -1s
+      )
+      1 normal both paused,
+    heading-o-line-fade 1s linear
+      calc(
+        (var(--scroll-y) - var(--heading-o-fade-start)) /
+          (var(--heading-o-fade-end) - var(--heading-o-fade-start)) * -1s
+      )
+      1 normal both paused;
+}
+
+@keyframes heading-o-line-fade {
+  to {
+    opacity: 0;
+  }
+}
+
+.hero {
+  position: relative;
+  height: calc(var(--hero-height) * 1px);
+}
+
+.hero__main-container {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  font-weight: 600;
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: calc(var(--container-margin) * 1px);
+}
+
+.hero__main {
+  max-width: 25ch;
+  font-size: 40px;
+  text-transform: uppercase;
+}
+
+.hero__secondary {
+  max-width: 15ch;
+  font-size: 22px;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  box-sizing: content-box;
+  padding: calc(var(--container-margin) * 1px);
+  transform: translateY(100%);
+
+  animation: hero-secondary-text-slide-in-out 1s linear
+    calc(
+      (var(--scroll-y) - var(--hero-secondary-text-start)) /
+        (var(--hero-secondary-text-end) - var(--hero-secondary-text-start)) *
+        -1s
+    )
+    1 normal both paused;
+}
+
+.hero__secondary::first-letter {
+  margin-left: -1ch;
+}
+
+@keyframes hero-secondary-text-slide-in-out {
+  0% {
+    transform: translateY(100%);
+  }
+  20% {
+    transform: translateY(0);
+  }
+  80% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.main {
+  line-height: 1.35;
+  margin: 0 calc(var(--container-margin) * 1px);
+}
+
+.main__paragraph {
+  margin: 0;
+  font-size: 16px;
+  max-width: 28ch;
 }
