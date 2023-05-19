@@ -8,6 +8,9 @@
   --container-bg-col: #fd8762;
   --container-bg-col-dark: black;
 
+  --theme-darken-start: 500;
+  --theme-darken-end: 500;
+
   --header-height: 5000;
   --header-inner-height: 500;
 
@@ -40,13 +43,12 @@
   background-color: var(--container-bg-col);
   padding: calc(var(--container-margin) * 1px);
 
-  animation: theme-darken 1s linear infinite;
-  animation-play-state: paused;
-  animation-iteration-count: 1;
-  animation-fill-mode: both;
-  animation-delay: calc(
-    var(--scroll-y) / var(--heading-o-shrink-distance) * -1s
-  );
+  animation: theme-darken 1s linear
+    calc(
+      (var(--scroll-y) - var(--theme-darken-start)) /
+        (var(--theme-darken-end) - var(--theme-darken-start)) * -1s
+    )
+    1 normal both paused;
 }
 
 @keyframes theme-darken {
@@ -70,14 +72,13 @@
 .heading__main {
   transform-origin: top left;
 
-  animation: heading-main-shrink 1s linear infinite;
-  animation-play-state: paused;
-  animation-iteration-count: 1;
-  animation-fill-mode: both;
-  animation-delay: calc(
-    (var(--scroll-y) - var(--heading-main-shrink-start)) /
-      (var(--heading-main-shrink-end) - var(--heading-main-shrink-start)) * -1s
-  );
+  animation: heading-main-shrink 1s linear
+    calc(
+      (var(--scroll-y) - var(--heading-main-shrink-start)) /
+        (var(--heading-main-shrink-end) - var(--heading-main-shrink-start)) *
+        -1s
+    )
+    1 normal both paused;
 }
 
 @keyframes heading-main-shrink {
@@ -89,17 +90,15 @@
 .heading__secondary {
   transform-origin: top right;
 
-  animation: heading-secondary-shrink 1s linear infinite;
-  animation-play-state: paused;
-  animation-iteration-count: 1;
-  animation-fill-mode: both;
-  animation-delay: calc(
-    (var(--scroll-y) - var(--heading-secondary-shrink-start)) /
-      (
-        var(--heading-secondary-shrink-end) -
-          var(--heading-secondary-shrink-start)
-      ) * -1s
-  );
+  animation: heading-secondary-shrink 1s linear
+    calc(
+      (var(--scroll-y) - var(--heading-secondary-shrink-start)) /
+        (
+          var(--heading-secondary-shrink-end) -
+            var(--heading-secondary-shrink-start)
+        ) * -1s
+    )
+    1 normal both paused;
 }
 
 @keyframes heading-secondary-shrink {
@@ -117,14 +116,12 @@
 .heading__text--kay {
   transform: translateY(calc(var(--heading-text-offset) * 100%));
 
-  animation: heading-text-merge 1s linear infinite;
-  animation-play-state: paused;
-  animation-iteration-count: 1;
-  animation-fill-mode: both;
-  animation-delay: calc(
-    (var(--scroll-y) - var(--heading-text-merge-start)) /
-      (var(--heading-text-merge-end) - var(--heading-text-merge-start)) * -1s
-  );
+  animation: heading-text-merge 1s linear
+    calc(
+      (var(--scroll-y) - var(--heading-text-merge-start)) /
+        (var(--heading-text-merge-end) - var(--heading-text-merge-start)) * -1s
+    )
+    1 normal both paused;
 }
 
 .heading__smiley-container {
@@ -133,14 +130,12 @@
   margin-left: calc(var(--smiley-left-offset) * 100%);
   transform: translateY(calc(var(--heading-text-offset) * 100%));
 
-  animation: heading-text-merge 1s linear infinite;
-  animation-play-state: paused;
-  animation-iteration-count: 1;
-  animation-fill-mode: both;
-  animation-delay: calc(
-    (var(--scroll-y) - var(--heading-text-merge-start)) /
-      (var(--heading-text-merge-end) - var(--heading-text-merge-start)) * -1s
-  );
+  animation: heading-text-merge 1s linear
+    calc(
+      (var(--scroll-y) - var(--heading-text-merge-start)) /
+        (var(--heading-text-merge-end) - var(--heading-text-merge-start)) * -1s
+    )
+    1 normal both paused;
 }
 
 @keyframes heading-text-merge {
@@ -155,6 +150,20 @@
   inset: -4px;
   background-color: white;
   border-radius: 1000px;
+  opacity: 0;
+
+  animation: smiley-bg-fade-in 1s linear
+    calc(
+      (var(--scroll-y) - var(--theme-darken-start)) /
+        (var(--theme-darken-end) - var(--theme-darken-start)) * -1s
+    )
+    1 normal both paused;
+}
+
+@keyframes smiley-bg-fade-in {
+  to {
+    opacity: 1;
+  }
 }
 
 .heading__smiley {
@@ -162,11 +171,9 @@
   fill: var(--container-fg-col);
   transform: rotate(20deg);
 
-  animation: heading-smiley-rotate 1s linear infinite;
-  animation-play-state: paused;
-  animation-iteration-count: 1;
-  animation-fill-mode: both;
-  animation-delay: calc(var(--scroll-y) / var(--smiley-rotate-distance) * -1s);
+  animation: heading-smiley-rotate 1s linear
+    calc(var(--scroll-y) / var(--smiley-rotate-distance) * -1s) 1 normal both
+    paused;
 }
 
 @keyframes heading-smiley-rotate {
@@ -186,14 +193,12 @@
 .heading__o--end {
   transform: translateY(calc(var(--heading-text-offset) * 100%));
 
-  animation: heading-text-merge 1s linear infinite;
-  animation-play-state: paused;
-  animation-iteration-count: 1;
-  animation-fill-mode: both;
-  animation-delay: calc(
-    (var(--scroll-y) - var(--heading-text-merge-start)) /
-      (var(--heading-text-merge-end) - var(--heading-text-merge-start)) * -1s
-  );
+  animation: heading-text-merge 1s linear
+    calc(
+      (var(--scroll-y) - var(--heading-text-merge-start)) /
+        (var(--heading-text-merge-end) - var(--heading-text-merge-start)) * -1s
+    )
+    1 normal both paused;
 }
 
 .heading__o-line {
@@ -204,13 +209,15 @@
   border-radius: 1000px;
   height: 100%;
 
-  animation: heading-o-line-shrink 1s linear infinite;
-  animation-play-state: paused;
-  animation-iteration-count: 1;
-  animation-fill-mode: both;
-  animation-delay: calc(
-    var(--scroll-y) / var(--heading-o-shrink-distance) * -1s
-  );
+  animation: heading-o-line-shrink 1s linear
+      calc(var(--scroll-y) / var(--heading-o-shrink-distance) * -1s) 1 normal
+      both paused,
+    theme-darken 1s linear
+      calc(
+        (var(--scroll-y) - var(--theme-darken-start)) /
+          (var(--theme-darken-end) - var(--theme-darken-start)) * -1s
+      )
+      1 normal both paused;
 }
 
 @keyframes heading-o-line-shrink {
