@@ -19,3 +19,7 @@ Run development server
 ```
 npx vite
 ```
+
+## Deployment
+
+This project is connected to Netlify, commits to `main` will trigger a build and deploy.
