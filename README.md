@@ -1,6 +1,6 @@
 # studiokay-experiments
 
-Animation and layout experiments.
+Animation and layout experiments for Studiokay.
 
 ## Requirements
 
