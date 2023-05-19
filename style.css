@@ -1,6 +1,15 @@
 /* Main stylesheet, using BEM CSS naming conventions */
 
 body {
+  /*
+  All custom properties are defined at root for organisation.
+  Values are without unit type to make math with them easier.
+  To get the value you just multiply them by 1 unit of whatever value e.g:
+  
+  width: calc(var(--width) * 1px);
+
+  */
+
   --container-height: 10000;
   --container-margin: 50;
   --container-fg-col: black;
@@ -47,8 +56,10 @@ body {
   color: var(--container-fg-col);
   background-color: var(--container-bg-col);
   font-family: 'AUTHENTIC Sans';
+  /* Prevent o's from causing horizontal scrollbars */
   overflow-x: hidden;
 
+  /* The animation shorthand has been used to avoid too much repetition */
   animation: theme-darken 1s linear
     calc(
       (var(--scroll-y) - var(--theme-darken-start)) /
@@ -83,6 +94,11 @@ body {
     )
     1 normal both paused;
 }
+
+/*
+For responsive styles you'd probably want to set up multiple shrink animations
+with different values and apply them to .heading__main and .heading__secondary
+at different breakpoints. */
 
 @keyframes heading-main-shrink {
   to {
@@ -147,11 +163,14 @@ body {
   }
 }
 
+/* Add a white background to the smiley when the theme darkens */
 .heading__smiley-container::before {
   content: '';
   position: absolute;
   inset: -4px;
   background-color: white;
+  /* Anytime border-radius: 1000px is used it means that we want it to be as
+  round as possible without causing an oval shape. */
   border-radius: 1000px;
   opacity: 0;
 
@@ -193,6 +212,7 @@ body {
   position: absolute;
   padding: calc(var(--heading-o-margin) * 100%) 0;
   width: calc(var(--heading-o-width) * 100%);
+  /* Could use the padding hack here instead of more browser support is required */
   aspect-ratio: 1 / var(--heading-o-height-ratio);
   left: calc(var(--heading-o-left-offset) * 100%);
 }
@@ -266,6 +286,11 @@ body {
   }
 }
 
+/* Hero text is put inside a 100vh div inside a taller div. The inner
+div has position sticky, this is what allows it to sit in the bottom
+corner until the outer div height is fully scrolled and then it will
+scroll naturally with the rest of the page content below it. */
+
 .hero {
   position: relative;
   height: calc(var(--hero-height) * 1px);
@@ -284,6 +309,7 @@ body {
 }
 
 .hero__main {
+  /* Base text width on character width */
   max-width: 25ch;
   font-size: 40px;
   text-transform: uppercase;
@@ -308,6 +334,7 @@ body {
     1 normal both paused;
 }
 
+/* Scooch that asterisk over */
 .hero__secondary::first-letter {
   margin-left: -1ch;
 }
