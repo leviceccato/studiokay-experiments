@@ -1,0 +1,237 @@
+/* Main stylesheet, using BEM CSS naming conventions */
+
+.container {
+  --container-height: 10000;
+  --container-margin: 50;
+  --container-fg-col: black;
+  --container-fg-col-dark: white;
+  --container-bg-col: #fd8762;
+  --container-bg-col-dark: black;
+
+  --header-height: 5000;
+  --header-inner-height: 500;
+
+  --heading-main-shrink: 0.4;
+  --heading-secondary-shrink: 0.6;
+  --heading-main-shrink-start: 1500;
+  --heading-main-shrink-end: 2000;
+  --heading-secondary-shrink-start: 1500;
+  --heading-secondary-shrink-end: 2000;
+
+  --heading-text-offset: 1.3;
+  --heading-text-merge-start: 1000;
+  --heading-text-merge-end: 1500;
+
+  --heading-o-shrink-distance: 1000;
+  --heading-o-margin: 0.002;
+  --heading-o-width: 0.21;
+  --heading-o-height-ratio: 0.49;
+  --heading-o-left-offset: 0.387;
+  /* Border thickness based on viewport to match thickness of logotype (also based on viewport) */
+  --heading-o-thickness: 0.0147;
+  /* Ensure heading-o's overhang edges enough */
+  --heading-o-min-overhang: calc(var(--container-margin) * 3);
+
+  --smiley-left-offset: 0.897;
+  --smiley-rotate-distance: 3000;
+
+  height: calc(var(--container-height) * 1px);
+  color: var(--container-fg-col);
+  background-color: var(--container-bg-col);
+  padding: calc(var(--container-margin) * 1px);
+
+  animation: theme-darken 1s linear infinite;
+  animation-play-state: paused;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  animation-delay: calc(
+    var(--scroll-y) / var(--heading-o-shrink-distance) * -1s
+  );
+}
+
+@keyframes theme-darken {
+  to {
+    color: var(--container-fg-col-dark);
+    background-color: var(--container-bg-col-dark);
+  }
+}
+
+.header {
+  height: calc(var(--header-height) * 1px);
+  position: relative;
+}
+
+.header__inner {
+  position: sticky;
+  top: calc(var(--container-margin) * 1px);
+  height: calc(var(--header-inner-height) * 1px);
+}
+
+.heading__main {
+  transform-origin: top left;
+
+  animation: heading-main-shrink 1s linear infinite;
+  animation-play-state: paused;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  animation-delay: calc(
+    (var(--scroll-y) - var(--heading-main-shrink-start)) /
+      (var(--heading-main-shrink-end) - var(--heading-main-shrink-start)) * -1s
+  );
+}
+
+@keyframes heading-main-shrink {
+  to {
+    transform: scale(var(--heading-main-shrink));
+  }
+}
+
+.heading__secondary {
+  transform-origin: top right;
+
+  animation: heading-secondary-shrink 1s linear infinite;
+  animation-play-state: paused;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  animation-delay: calc(
+    (var(--scroll-y) - var(--heading-secondary-shrink-start)) /
+      (
+        var(--heading-secondary-shrink-end) -
+          var(--heading-secondary-shrink-start)
+      ) * -1s
+  );
+}
+
+@keyframes heading-secondary-shrink {
+  to {
+    transform: scale(var(--heading-secondary-shrink));
+  }
+}
+
+.heading__text {
+  position: absolute;
+  width: 100%;
+  fill: currentColor;
+}
+
+.heading__text--kay {
+  transform: translateY(calc(var(--heading-text-offset) * 100%));
+
+  animation: heading-text-merge 1s linear infinite;
+  animation-play-state: paused;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  animation-delay: calc(
+    (var(--scroll-y) - var(--heading-text-merge-start)) /
+      (var(--heading-text-merge-end) - var(--heading-text-merge-start)) * -1s
+  );
+}
+
+.heading__smiley-container {
+  position: relative;
+
+  margin-left: calc(var(--smiley-left-offset) * 100%);
+  transform: translateY(calc(var(--heading-text-offset) * 100%));
+
+  animation: heading-text-merge 1s linear infinite;
+  animation-play-state: paused;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  animation-delay: calc(
+    (var(--scroll-y) - var(--heading-text-merge-start)) /
+      (var(--heading-text-merge-end) - var(--heading-text-merge-start)) * -1s
+  );
+}
+
+@keyframes heading-text-merge {
+  to {
+    transform: translateY(0);
+  }
+}
+
+.heading__smiley-container::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  background-color: white;
+  border-radius: 1000px;
+}
+
+.heading__smiley {
+  display: block;
+  fill: var(--container-fg-col);
+  transform: rotate(20deg);
+
+  animation: heading-smiley-rotate 1s linear infinite;
+  animation-play-state: paused;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  animation-delay: calc(var(--scroll-y) / var(--smiley-rotate-distance) * -1s);
+}
+
+@keyframes heading-smiley-rotate {
+  to {
+    transform: rotate(380deg);
+  }
+}
+
+.heading__o {
+  position: absolute;
+  margin: calc(var(--heading-o-margin) * 100%) 0;
+  width: calc(var(--heading-o-width) * 100%);
+  aspect-ratio: 1 / var(--heading-o-height-ratio);
+  left: calc(var(--heading-o-left-offset) * 100%);
+}
+
+.heading__o--end {
+  transform: translateY(calc(var(--heading-text-offset) * 100%));
+
+  animation: heading-text-merge 1s linear infinite;
+  animation-play-state: paused;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  animation-delay: calc(
+    (var(--scroll-y) - var(--heading-text-merge-start)) /
+      (var(--heading-text-merge-end) - var(--heading-text-merge-start)) * -1s
+  );
+}
+
+.heading__o-line {
+  position: absolute;
+  background-color: var(--container-bg-col);
+
+  border: calc(var(--heading-o-thickness) * 100vw) solid currentColor;
+  border-radius: 1000px;
+  height: 100%;
+
+  animation: heading-o-line-shrink 1s linear infinite;
+  animation-play-state: paused;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  animation-delay: calc(
+    var(--scroll-y) / var(--heading-o-shrink-distance) * -1s
+  );
+}
+
+@keyframes heading-o-line-shrink {
+  to {
+    width: 100%;
+  }
+}
+
+.heading__o-line--start {
+  width: calc(
+    ((1 - var(--heading-o-left-offset)) / var(--heading-o-width)) * 100% +
+      (var(--heading-o-min-overhang) * 1px)
+  );
+}
+
+.heading__o-line--end {
+  right: 0;
+  width: calc(
+    (
+        (var(--heading-o-left-offset) + var(--heading-o-width)) /
+          var(--heading-o-width)
+      ) * 100% + (var(--heading-o-min-overhang) * 1px)
+  );
+}
