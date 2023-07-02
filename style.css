@@ -78,6 +78,8 @@ body {
   color: var(--container-fg-col);
   background-color: var(--container-bg-col);
   font-family: 'AUTHENTIC Sans';
+  /* Prevent o's from causing horizontal scrollbars */
+  overflow-x: hidden;
 
   /* The animation shorthand has been used to avoid too much repetition */
   animation: theme-darken 1s linear
@@ -97,8 +99,7 @@ body {
 
 .header {
   height: calc(var(--header-height) * 1px);
-  position: sticky;
-  top: 0;
+  position: fixed;
   width: 100%;
   padding: calc(var(--container-margin) * 1px);
 }
