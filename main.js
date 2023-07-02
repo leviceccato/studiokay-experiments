@@ -1,5 +1,12 @@
-// Setup custom property that responds to scrolling
+const lenis = new Lenis()
 
-window.addEventListener('scroll', () => {
-  document.body.style.setProperty('--scroll-y', window.scrollY)
+lenis.on('scroll', (e) => {
+  document.body.style.setProperty('--scroll-y', e.animate.value)
 })
+
+function raf(time) {
+  lenis.raf(time)
+  requestAnimationFrame(raf)
+}
+
+requestAnimationFrame(raf)
